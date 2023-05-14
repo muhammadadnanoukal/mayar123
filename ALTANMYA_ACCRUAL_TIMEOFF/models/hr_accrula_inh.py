@@ -41,48 +41,56 @@ class HrLeaveInh(models.Model):
     # @api.onchange('request_date_from')
     def _get_date_possible(self):
         for holiday in self:
-            holiday.possible_days = ""
-            aco_hr_leave = holiday.holiday_status_id.Forecast_Future_Allocation
+            if holiday.holiday_status_id:
+                holiday.possible_days = ""
+                aco_hr_leave = holiday.holiday_status_id.Forecast_Future_Allocation
 
-            print('b6e55 mbsmr..', holiday.holiday_status_id.Forecast_Future_Allocation)
-            if aco_hr_leave:
-                # Perform the necessary computations
-                mapped_days = self.holiday_status_id.get_employees_days(
-                    (holiday.employee_id | holiday.employee_ids).ids,
-                    holiday.date_from.date())
-                if holiday.holiday_type != 'employee' \
-                        or not holiday.employee_id and not holiday.employee_ids \
-                        or holiday.holiday_status_id.requires_allocation == 'no':
-                    continue
-                if holiday.employee_id:
-                    leave_days = mapped_days[holiday.employee_id.id][holiday.holiday_status_id.id]
-                    allocation = self.env['hr.leave.allocation'].search([('employee_id', '=', holiday.employee_id.id),
-                                                                         ('allocation_type', '=', 'accrual')])
-                    m = allocation.get_total_invoked(holiday.request_date_from)
+                print('b6e55 mbsmr..', holiday.holiday_status_id.Forecast_Future_Allocation)
+                if aco_hr_leave:
+                    # Perform the necessary computations
+                    mapped_days = self.holiday_status_id.get_employees_days(
+                        (holiday.employee_id | holiday.employee_ids).ids,
+                        holiday.date_from.date())
+                    if holiday.holiday_type != 'employee' \
+                            or not holiday.employee_id and not holiday.employee_ids \
+                            or holiday.holiday_status_id.requires_allocation == 'no':
+                        continue
+                        print('holiday.employee_id.outsiad..',holiday.employee_id)
+                    if holiday.employee_id:
+                        print('holiday.employee_id.insiad..', holiday.employee_id)
+                        leave_days = mapped_days[holiday.employee_id.id][holiday.holiday_status_id.id]
+                        allocation = self.env['hr.leave.allocation'].search([('employee_id', '=', holiday.employee_id.id),
+                                                                             ('allocation_type', '=', 'accrual')])
+                        m = allocation.get_total_invoked(holiday.request_date_from)
 
-                    holiday.possible_days = m + math.floor(leave_days['virtual_remaining_leaves'])
-                    print('self.possible_days..', holiday.possible_days)
-                    print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
-                    print('mvvv.m..', m)
+                        holiday.possible_days = m + math.floor(leave_days['virtual_remaining_leaves'])
+                        print('self.possible_days..', holiday.possible_days)
+                        print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
+                        print('mvvv.m..', m)
+                else:
+                    # Set possible_days to a default value when Forecast_Future_Allocation is False
+                    mapped_days = self.holiday_status_id.get_employees_days(
+                        (holiday.employee_id | holiday.employee_ids).ids,
+                        holiday.date_from.date())
+                    if holiday.holiday_type != 'employee' \
+                            or not holiday.employee_id and not holiday.employee_ids \
+                            or holiday.holiday_status_id.requires_allocation == 'no':
+                        continue
+                    print('holiday.employee_id.outsiad2..', holiday.employee_id)
+                    if holiday.employee_id:
+                        print('holiday.employee_id.outsiad33..', holiday.employee_id, mapped_days)
+                        leave_days = mapped_days[holiday.employee_id.id][holiday.holiday_status_id.id]
+                        print('leave_daysasd..', leave_days)
+                        allocation = self.env['hr.leave.allocation'].search([('employee_id', '=', holiday.employee_id.id),
+                                                                             ('allocation_type', '=', 'accrual')])
+                        m = allocation.get_total_invoked(holiday.request_date_from)
+
+                        holiday.possible_days = int(leave_days['virtual_remaining_leaves'])
+                        print('self.possible_days..', holiday.possible_days)
+                        print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
+                        print('mvvv.m..', m)
             else:
-                # Set possible_days to a default value when Forecast_Future_Allocation is False
-                mapped_days = self.holiday_status_id.get_employees_days(
-                    (holiday.employee_id | holiday.employee_ids).ids,
-                    holiday.date_from.date())
-                if holiday.holiday_type != 'employee' \
-                        or not holiday.employee_id and not holiday.employee_ids \
-                        or holiday.holiday_status_id.requires_allocation == 'no':
-                    continue
-                if holiday.employee_id:
-                    leave_days = mapped_days[holiday.employee_id.id][holiday.holiday_status_id.id]
-                    allocation = self.env['hr.leave.allocation'].search([('employee_id', '=', holiday.employee_id.id),
-                                                                         ('allocation_type', '=', 'accrual')])
-                    m = allocation.get_total_invoked(holiday.request_date_from)
-
-                    holiday.possible_days = int(leave_days['virtual_remaining_leaves'])
-                    print('self.possible_days..', holiday.possible_days)
-                    print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
-                    print('mvvv.m..', m)
+                holiday.possible_days = ""
 
     @api.constrains('state', 'number_of_days', 'holiday_status_id')
     def _check_holidays(self):
