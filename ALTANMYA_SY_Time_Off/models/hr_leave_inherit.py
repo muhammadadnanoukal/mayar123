@@ -401,6 +401,12 @@ class HRLeave(models.Model):
                          ('work_entry_type_id.code', '=', 'HOLIDAY'),
                          ('employee_id', '=', work_entry.employee_id.id),
                          ('state', '=', 'draft')])
+                    conflict_with_holiday = self.env['hr.work.entry'].search(
+                        [('date_start', '>=', start_time), ('date_stop', '<=', end_time_mod),
+                         ('employee_id', '=', work_entry.employee_id.id),
+                         ('state', '=', 'draft')])
+                    for conflict in conflict_with_holiday:
+                        conflict.unlink()
                     print('conflict public holiday ', conflict_with_public_holiday)
                     if not conflict_with_public_holiday:
                         print('conflict_with_public_holiday ', conflict_with_public_holiday)
