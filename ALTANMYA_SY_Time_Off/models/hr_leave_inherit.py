@@ -384,7 +384,7 @@ class HRLeave(models.Model):
                     year=end.year,
                     month=end.month,
                     day=end.day,
-                    hour=12,
+                    hour=14,
                     minute=0,
                 )
                 end_time_mod = datetime(
