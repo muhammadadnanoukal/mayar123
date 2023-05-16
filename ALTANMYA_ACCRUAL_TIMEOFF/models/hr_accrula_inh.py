@@ -151,6 +151,7 @@ class test(models.Model):
     _inherit = 'hr.leave.allocation'
 
     def get_total_invoked(self, leave_start_date):
+        forcasted_days = 0
         for allocation in self:
             i = 1
             (current_level, current_level_idx) = allocation._get_current_accrual_plan_level_id(allocation.nextcall)
