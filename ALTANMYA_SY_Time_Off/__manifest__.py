@@ -24,7 +24,7 @@
     'author': 'ALTANMYA - TECHNOLOGY SOLUTIONS',
     'company': 'ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP',
     'website': "https://tech.altanmya.net",
-    'depends': ['hr_holidays'],
+    'depends': ['hr_holidays', 'hr_payroll'],
     'data': [
         'views/hr_leave_views_inherited.xml',
         'views/hr_leave_views_inherit.xml'
