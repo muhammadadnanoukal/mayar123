@@ -29,6 +29,23 @@ class HrWorkEntry(models.Model):
         with self._error_checking(skip=skip_check):
             return super(models.Model, self).write(vals)
 
+    def action_validate(self):
+        """
+        Try to validate work entries.
+        If some errors are found, set `state` to conflict for conflicting work entries
+        and validation fails.
+        :return: True if validation succeded
+        """
+        print('this should not get executed')
+        holiday_entries = self.filtered(lambda work_entry: work_entry.is_holiday_entry == True)
+        holiday_entries.write({'state': 'validated'})
+
+        work_entries = self.filtered(lambda work_entry: work_entry.state != 'validated')
+        if not work_entries._check_if_error():
+            work_entries.write({'state': 'validated'})
+            return True
+        return False
+
     @contextmanager
     def _error_checking(self, start=None, stop=None, skip=False, employee_ids=False):
         """
