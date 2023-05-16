@@ -12,6 +12,21 @@ class HrWorkEntry(models.Model):
 
     is_holiday_entry = fields.Boolean('Is holiday entry?', default=False)
 
+    def write(self, vals):
+        skip_check = not bool({'date_start', 'date_stop', 'employee_id', 'work_entry_type_id', 'active'} & vals.keys())
+        if 'state' in vals:
+            if vals['state'] == 'draft':
+                vals['active'] = True
+            elif vals['state'] == 'cancelled':
+                vals['active'] = False
+                skip_check &= all(self.mapped(lambda w: w.state != 'conflict'))
+
+        if 'active' in vals:
+            vals['state'] = 'draft' if vals['active'] else 'cancelled'
+
+        with self._error_checking(skip=skip_check):
+            return super(HrWorkEntry, self).write(vals)
+
     @contextmanager
     def _error_checking(self, start=None, stop=None, skip=False):
         """
