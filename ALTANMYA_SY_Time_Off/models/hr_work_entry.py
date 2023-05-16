@@ -25,7 +25,7 @@ class HrWorkEntry(models.Model):
             vals['state'] = 'draft' if vals['active'] else 'cancelled'
 
         with self._error_checking(skip=skip_check):
-            return super(HrWorkEntry, self).write(vals)
+            return super(models.Model, self).write(vals)
 
     @contextmanager
     def _error_checking(self, start=None, stop=None, skip=False):
