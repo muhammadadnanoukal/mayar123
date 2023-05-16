@@ -235,13 +235,13 @@ class HRLeave(models.Model):
             return self.holiday_status_id.number_of_allowed_days
 
     # sick leaves
-    @api.model_create_multi
-    def create(self, vals_list):
-        holidays = super(HRLeave, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
-        print('vals list')
-        print(vals_list)
-        self.env['hr.employee'].search([('id', '=', vals_list[0]['employee_ids'][0][0])]).compute_total_leaves()
-        return holidays
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     holidays = super(HRLeave, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
+    #     print('vals list')
+    #     print(vals_list)
+    #     self.env['hr.employee'].search([('id', '=', vals_list[0]['employee_ids'][0][0])]).compute_total_leaves()
+    #     return holidays
 
     def write(self, values):
         result = super(HRLeave, self).write(values)
