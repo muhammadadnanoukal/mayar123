@@ -419,7 +419,7 @@ class HRLeave(models.Model):
                             'date_stop': end_time,
                             'leave_id': self.id,
                             'is_holiday_entry': True,
-                            'duration': 7,
+                            'duration': 9,
                         })
                         new.write({
                             'state': 'draft'
