@@ -63,7 +63,7 @@ class HrLeaveInh(models.Model):
                                                                              ('allocation_type', '=', 'accrual')])
                         m = allocation.get_total_invoked(holiday.request_date_from)
 
-                        holiday.possible_days = m + math.floor(leave_days['virtual_remaining_leaves'])
+                        holiday.possible_days = m + leave_days['virtual_remaining_leaves']
                         print('self.possible_days..', holiday.possible_days)
                         print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
                         print('mvvv.m..', m)
@@ -85,7 +85,7 @@ class HrLeaveInh(models.Model):
                                                                              ('allocation_type', '=', 'accrual')])
                         m = allocation.get_total_invoked(holiday.request_date_from)
 
-                        holiday.possible_days = int(leave_days['virtual_remaining_leaves'])
+                        holiday.possible_days = leave_days['virtual_remaining_leaves']
                         print('self.possible_days..', holiday.possible_days)
                         print("leave_days['virtual_remaining_leaves']", leave_days['virtual_remaining_leaves'])
                         print('mvvv.m..', m)
@@ -153,7 +153,7 @@ class test(models.Model):
     def get_total_invoked(self, leave_start_date):
         forcasted_days = 0
         for allocation in self:
-            i = 1
+            i = 0
             (current_level, current_level_idx) = allocation._get_current_accrual_plan_level_id(allocation.nextcall)
             print('allocation : ', allocation, allocation.nextcall)
             forcasted_days = 0
@@ -166,6 +166,8 @@ class test(models.Model):
                     print('hiiii', nextcall)
                     i += 1
                 forcasted_days = i * current_level.added_value
+                print('gegege...',forcasted_days)
+                print('geg22ege...',current_level.added_value)
         return forcasted_days
 
         # if self._get_next_date_edited(self.last)
