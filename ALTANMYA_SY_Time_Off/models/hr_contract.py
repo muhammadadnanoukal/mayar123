@@ -158,47 +158,48 @@ class HrContract(models.Model):
                 type_id = leave_entry_type.id
             print('dates ', date_start, date_stop)
             holidays_in_this_period = self.env['resource.calendar.leaves'].search(
-                [('date_from', '>=', date_start), ('date_to', '<=', date_stop)
+                [('date_from', '>=', date_start - timedelta(hours=3)), ('date_to', '<=', date_stop - timedelta(hours=3))
                     , ('resource_id', '=', False)])
             print('holidays_in_this_period', holidays_in_this_period)
-            delta = holidays_in_this_period.date_to + timedelta(hours=3) - holidays_in_this_period.date_from + timedelta(hours=3)
-            days = []
-            already_filled = []
-            not_found = []
-            if delta != 0:
-                for i in range(delta.days + 1):
-                    day = holidays_in_this_period.date_from + timedelta(hours=3, days=i)
-                    print(day)
-                    days.append(day)
-                for d in days:
-                    i = 0
-                    for val in contract_vals:
-                        print('value is : ', val)
-                        if d.strftime('%Y-%m-%d') == val['date_start'].strftime('%Y-%m-%d') and val[
-                            'employee_id'] == employee.id:
-                            already_filled.append(d)
-                            i += 1
-                    if i == 0:
-                        not_found.append(d)
-                        # print('val : ', val)
-                print('already ', already_filled)
-                print('not_found ', not_found)
-            for da in not_found:
-                print('da : ', da)
-                start = da.replace(hour=5, minute=00)
-                end = da.replace(hour=14, minute=00)
-                contract_vals += [dict([
-                    ('name', entry_type),
-                    ('date_start', start),
-                    ('date_stop', end),
-                    ('duration', 9),
-                    ('is_holiday_entry', True),
-                    ('work_entry_type_id', type_id),
-                    ('employee_id', employee.id),
-                    ('company_id', contract.company_id.id),
-                    ('state', 'draft'),
-                    ('contract_id', contract.id),
-                ])]
+            for rec in holidays_in_this_period:
+                delta = rec.date_to + timedelta(hours=3) - rec.date_from + timedelta(hours=3)
+                days = []
+                already_filled = []
+                not_found = []
+                if delta != 0:
+                    for i in range(delta.days + 1):
+                        day = rec.date_from + timedelta(hours=3, days=i)
+                        print(day)
+                        days.append(day)
+                    for d in days:
+                        i = 0
+                        for val in contract_vals:
+                            print('value is : ', val)
+                            if d.strftime('%Y-%m-%d') == val['date_start'].strftime('%Y-%m-%d') and val[
+                                'employee_id'] == employee.id:
+                                already_filled.append(d)
+                                i += 1
+                        if i == 0:
+                            not_found.append(d)
+                            # print('val : ', val)
+                    print('already ', already_filled)
+                    print('not_found ', not_found)
+                for da in not_found:
+                    print('da : ', da)
+                    start = da.replace(hour=5, minute=00)
+                    end = da.replace(hour=14, minute=00)
+                    contract_vals += [dict([
+                        ('name', f'{rec.work_entry_type_id.name}: {employee.name}'),
+                        ('date_start', start),
+                        ('date_stop', end),
+                        ('duration', 9),
+                        ('is_holiday_entry', True),
+                        ('work_entry_type_id', rec.work_entry_type_id.id),
+                        ('employee_id', employee.id),
+                        ('company_id', contract.company_id.id),
+                        ('state', 'draft'),
+                        ('contract_id', contract.id),
+                    ])]
         return contract_vals
 
     # def _get_more_vals_attendance_interval(self, interval):
