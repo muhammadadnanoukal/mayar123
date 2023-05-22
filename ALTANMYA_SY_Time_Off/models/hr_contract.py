@@ -161,13 +161,13 @@ class HrContract(models.Model):
                 [('date_from', '>=', date_start), ('date_to', '<=', date_stop)
                     , ('resource_id', '=', False)])
             print('holidays_in_this_period', holidays_in_this_period)
-            delta = holidays_in_this_period.date_to - holidays_in_this_period.date_from
+            delta = holidays_in_this_period.date_to + timedelta(hours=3) - holidays_in_this_period.date_from + timedelta(hours=3)
             days = []
             already_filled = []
             not_found = []
             if delta != 0:
                 for i in range(delta.days + 1):
-                    day = holidays_in_this_period.date_from + timedelta(days=i)
+                    day = holidays_in_this_period.date_from + timedelta(hours=3, days=i)
                     print(day)
                     days.append(day)
                 for d in days:
