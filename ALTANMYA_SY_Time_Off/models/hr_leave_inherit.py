@@ -424,8 +424,76 @@ class HRLeave(models.Model):
                         new.write({
                             'state': 'draft'
                         })
+        elif self.id:
+            unusaldays = self.employee_id._get_unusual_days(self.date_from, self.date_to)
+            print('unusual areee 2', unusaldays)
+            dates = []
+            if unusaldays:
+                for key, value in unusaldays.items():
+                    if value:
+                        dates.append(key)
+                print('dates : ', dates)
+            work_entry = self.env['hr.work.entry']
+            # for rec in matched:
+            #     print('vals : ', rec.name, rec.contract_id, rec.employee_id, rec.work_entry_type_id, rec.date_start,
+            #           rec.date_stop)
+            #     work_entry = rec
+            name = self.holiday_status_id.work_entry_type_id.name
+            # contract_id = work_entry.contract_id
+            employee_id = self.employee_id.name
+            work_entry_type_id = self.holiday_status_id.work_entry_type_id.id
 
-            # self.env['hr.work.entry'].search([('date_start', '=', )])
+            print('id : ', self.id)
+            # print(type(work_entry.date_start))
+            for d in dates:
+                print('d type ', type(d))
+                start = datetime.strptime(d, '%Y-%m-%d')
+                end = datetime.strptime(d, '%Y-%m-%d')
+                start_time = datetime(
+                    year=start.year,
+                    month=start.month,
+                    day=start.day,
+                    hour=5,
+                    minute=0,
+                )
+                end_time = datetime(
+                    year=end.year,
+                    month=end.month,
+                    day=end.day,
+                    hour=14,
+                    minute=0,
+                )
+                end_time_mod = datetime(
+                    year=end.year,
+                    month=end.month,
+                    day=end.day,
+                    hour=21,
+                    minute=0,
+                )
+                print('start and end : ', start_time, end_time)
+                if self.holiday_status_id.is_connected_days:
+                    conflict_with_public_holiday = self.env['hr.work.entry'].search(
+                        [('date_start', '>=', start_time), ('date_stop', '<=', end_time_mod),
+                         ('work_entry_type_id.code', '=', 'HOLIDAY'),
+                         ('employee_id', '=', self.employee_id.id),
+                         ('state', '=', 'draft')])
+                    print('conflict public holiday ', conflict_with_public_holiday)
+                    if not conflict_with_public_holiday:
+                        print('conflict_with_public_holiday ', conflict_with_public_holiday)
+                        new = self.env['hr.work.entry'].create({
+                            'name': name,
+                            'employee_id': self.employee_id.id,
+                            'contract_id': self.employee_id.contract_id.id,
+                            'work_entry_type_id': work_entry_type_id,
+                            'date_start': start_time,
+                            'date_stop': end_time,
+                            'leave_id': self.id,
+                            'is_holiday_entry': True,
+                            'duration': 9,
+                        })
+                        new.write({
+                            'state': 'draft'
+                        })
 
         return res
 
