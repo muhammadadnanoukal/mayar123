@@ -185,8 +185,8 @@ class HrContract(models.Model):
                 print('not_found ', not_found)
             for da in not_found:
                 print('da : ', da)
-                start = da - timedelta(hours=15)
-                end = da - timedelta(hours=7)
+                start = da.replace(hour=5, minute=00)
+                end = da.replace(hour=14, minute=00)
                 contract_vals += [dict([
                     ('name', entry_type),
                     ('date_start', start),
