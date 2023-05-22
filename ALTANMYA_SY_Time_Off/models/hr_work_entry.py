@@ -46,6 +46,21 @@ class HrWorkEntry(models.Model):
             return True
         return False
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        work_entries = super().create(vals_list)
+        print('entries before ', work_entries)
+        for e in work_entries:
+            print('state is : ', e.date_start, e.state)
+        # work_entries_to_check = work_entries.filtered(lambda b: not b.is_holiday_entry)
+        # print('entries to check ', work_entries_to_check)
+        # work_entries_to_check._check_if_error()
+        # print('entries after ', work_entries)
+        for e in work_entries:
+            if e.is_holiday_entry:
+                e.state = 'draft'
+        return work_entries
+
     @contextmanager
     def _error_checking(self, start=None, stop=None, skip=False, employee_ids=False):
         """
