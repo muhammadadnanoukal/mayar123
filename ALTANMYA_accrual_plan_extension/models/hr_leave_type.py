@@ -21,6 +21,7 @@ class HolidaysType(models.Model):
 
         now = str(fields.Datetime.now())
         year = now[0:4]
+        # year = '2024'
         first_day_of_year = year + '-01-01'
         last_day_of_year = year + '-12-31'
         leaves = self.env['hr.leave'].search([

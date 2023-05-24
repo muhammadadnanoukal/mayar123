@@ -26,7 +26,8 @@
     'website': "https://tech.altanmya.net",
     'depends': ['hr_holidays'],
     'data': [
-        'views/hr_leave_accrual_views.xml'
+        'views/hr_leave_accrual_views.xml',
+        'data/ir_cron_data.xml'
     ],
     'installable': True,
     'application': False,
