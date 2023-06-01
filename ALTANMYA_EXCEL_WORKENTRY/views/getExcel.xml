@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="patient_tree_2" model="ir.ui.view">
+        <field name="name">hr.work.entry.inh2</field>
+        <field name="model">hr.work.entry.inh</field>
+        <field name="arch" type="xml">
+            <tree expand="1">
+                <field name="test"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_form_patient_2" model="ir.actions.act_window">
+        <field name="name">work</field>
+        <field name="res_model">hr.work.entry.inh</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create your first patient
+            </p>
+        </field>
+    </record>
+
+    <record id="excel_approval" model="ir.ui.view">
+        <field name="name">approval.request</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position="after">
+                <page string="Show Excel" name="show_excel">
+                <field name="excel_data_ids" widget="one2many_list">
+                    <tree >
+                        <field name="employee" string="Employee"/>
+                        <field name="date" string="Date"/>
+                        <field name="start_hour" string="Start Hour"/>
+                        <field name="worked_hours" string="Worked Hours"/>
+                        <field name="late" string="Late"/>
+                        <field name="overtime" string="Overtime"/>
+                        <field name="apporvlelateee" string="Approved"/>
+                        <field name="apporvleovertime" string="Approved"/>
+                    </tree>
+                </field>
+            </page>
+            </xpath>
+        </field>
+    </record>
+
+
+     <record id="excel_approval_category" model="ir.ui.view">
+        <field name="name">approval.category</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet[1]/group[1]/field[1]" position="after">
+                 <field name="atten" string="Chose Attendance"/>
+                 <field name="overTime" string="Chose OverTime"/>
+                 <field name="Late" string="Chose Late"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <menuitem id="work_entry_root"
+              name='ALTANMYA WORKENTRY'
+              sequence='10'
+    />
+
+    <menuitem id="work_entry_inh"
+              name='work entry'
+              parent="work_entry_root"
+              sequence='10'
+    />
+
+    <menuitem id="hafsf_2"
+              name='qdq'
+              parent="work_entry_inh"
+              action="action_upload_excel_wizard"
+              sequence='10'
+    />
+
+    <!--      <menuitem id="upload_work_entry"-->
+    <!--              name='upload work entry'-->
+    <!--              parent="work_entry_inh"-->
+    <!--              action="action_upload_excel_wizard"-->
+    <!--              sequence='30'-->
+    <!--    />-->
+
+</odoo>

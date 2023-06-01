@@ -1,0 +1,21 @@
+{
+    'name': 'ALTANMYA EXCEL WORKENTRY',
+    'version': '1.0',
+    'summary': 'ALTANMYA EXCEL WORKENTRY',
+    'description': """ALTANMYA EXCEL WORKENTRY """,
+    'category': 'Human Resources/Approvals',
+    'author': 'ALTANMYA - TECHNOLOGY SOLUTIONS',
+    'company': 'ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP',
+    'website': "https://tech.altanmya.net",
+    'depends': ['hr_work_entry','approvals'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/data.xml',
+        'wizard/excel_workentry_wizard_views.xml',
+        'views/getExcel.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

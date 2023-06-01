@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_work_entry_inh,access.hr.work.entry.inh,model_hr_work_entry_inh,,1,1,1,1
+access_work_entry_inh_wizard,access.work.entry.inh.wizard,model_work_entry_inh_wizard,,1,1,1,1
+access_excel_data,access.excel.data,model_excel_data,,1,1,1,1

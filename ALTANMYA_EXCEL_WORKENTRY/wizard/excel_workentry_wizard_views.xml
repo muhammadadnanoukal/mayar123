@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="view_upload_excel_wizard_form" model="ir.ui.view">
+            <field name="name">work.entry.inh.wizard.form</field>
+            <field name="model">work.entry.inh.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Upload Excel File">
+                    <group>
+                        <field name="excel_file" widget="binary" filename="file_name" string="Excel File"/>
+<!--                        <field name="approver_ids"/>-->
+                    </group>
+                    <footer>
+                        <button name="import_excel_data" string="Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_upload_excel_wizard">
+            <field name="name">Upload Excel Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">work.entry.inh.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_upload_excel_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
