@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wide_horizon_config_employee_inherited" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.employee</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='enrich_employee_setting'][1]" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="presence_control_setting" title="Set days before expiration of an end date to be notified before">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Notification Control</span>
+                        <div class="content-group" name="hr_employee_options">
+                            <div class="d-flex">
+                                <span>Notified Period Days: </span>
+                                <field name="notified_period"/>
+                            </div>
+                            <div class="d-flex">
+                                <span>Notified Period Email Template: </span>
+                                <field name="notified_email_template"/>
+                            </div>
+                            <div class="d-flex">
+                                <span>Notified Period User: </span>
+                                <field name="notified_email_user"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
