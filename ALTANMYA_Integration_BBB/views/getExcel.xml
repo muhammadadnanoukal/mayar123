@@ -1,0 +1,68 @@
+<odoo>
+    <record id="integration_form" model="ir.ui.view">
+        <field name="name">integration.bbb.form</field>
+        <field name="model">integration.bbb</field>
+        <field name="arch" type="xml">
+            <form string="BigBlueButton Meeting">
+                <header>
+                    <button name="create_bigbluebutton_room" string="Create Meeting" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="record"/>
+                        <field name="user_id"/>
+                        <field name="role"/>
+                        <field name="pdf_file"/>
+                        <field name="is_MODERATOR"/>
+                        <field name="duration_minutes"/>
+                        <field name="prevent_camera"/>
+                        <field name="user_listen_only"/>
+                        <field name="disable_private_chats"/>
+                        <field name="disable_public_chats"/>
+                        <field name="disable_notes_chats"/>
+                        <field name="prevent_viewers_seeing"/>
+                        <field name="meeting_end_if_after"/>
+                        <field name="min_to_end" attrs="{'invisible': [('meeting_end_if_after', '=', False)]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="integration_tree" model="ir.ui.view">
+        <field name="name">integration.bbb.tree</field>
+        <field name="model">integration.bbb</field>
+        <field name="arch" type="xml">
+            <tree string="BigBlueButton Meetings">
+                <field name="name"/>
+                <field name="record"/>
+                <field name="user_id"/>
+                <field name="role"/>
+                <button name="join_bigbluebutton_room" string="Join Meeting" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="end_bigbluebutton_meeting" string="End Meeting" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="getMeetingInfo" string="info Meeting" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="getMeetings" string="Get Meeting" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="isMeetingRunning" string="is Meeting Running" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="upload_and_send_to_bbb" string="upload PDF" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="getRecordings" string="get Recordings" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="publishRecordings" string="publish Recordings" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+                <button name="deleteRecordings" string="delete Recordings" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>
+<!--                <button name="getRecordingTextTracks" string="get Recording Text Tracks" type="object" class="oe_highlight" attrs="{'invisible': [('record', '=', False)]}"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_integration_bbb" model="ir.actions.act_window">
+        <field name="name">BigBlueButton Meetings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">integration.bbb</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="integration_entry_root" name="ALTANMYA Integration with BBB" sequence="10"/>
+
+    <menuitem id="integration_entry_inh" name="Integration with BBB" parent="integration_entry_root" action="action_integration_bbb" sequence="10"/>
+
+<!--    <menuitem id="integration_2" name="Create" parent="integration_entry_inh" action="action_integration_bbb" sequence="10"/>-->
+</odoo>

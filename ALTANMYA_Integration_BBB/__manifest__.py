@@ -1,0 +1,21 @@
+{
+    'name': 'ALTANMYA Integration BBB',
+    'version': '1.0',
+    'summary': 'ALTANMYA Integration BBB',
+    'description': """ALTANMYA Integration BBB """,
+    'category': 'Human Resources/Approvals',
+    'author': 'ALTANMYA - TECHNOLOGY SOLUTIONS',
+    'company': 'ALTANMYA - TECHNOLOGY SOLUTIONS Part of ALTANMYA GROUP',
+    'website': "https://tech.altanmya.net",
+    'depends': ['base', 'approvals', 'mail', 'website', 'portal', 'website_mail', 'web'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/data.xml',
+        'views/getExcel.xml',
+        'views/showmeet.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

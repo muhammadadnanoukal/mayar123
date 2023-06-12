@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="menu_integration_bbb" model="website.menu">
+            <field name="name">Meetings</field>
+            <field name="url">/meeting</field>
+            <field name="sequence">1</field>
+        </record>
+    </data>
+</odoo>
