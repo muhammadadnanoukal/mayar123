@@ -40,7 +40,7 @@ class getmeeting(http.Controller):
     def joinmeeting(self, meeting_id, **kw):
         meeting = request.env['integration.bbb'].sudo().browse(meeting_id)
         print('kokokomeeting_id==>', (meeting))
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/join"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join"
 
         params = {
             'fullName': request.env.user.name if request.env.user else 'user',
@@ -48,7 +48,7 @@ class getmeeting(http.Controller):
             'role': "MODERATOR" if meeting.is_MODERATOR else 'VIEWER',  # Use the stored role
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
         call = 'join'
 
         query_string = urllib.parse.urlencode(params)
