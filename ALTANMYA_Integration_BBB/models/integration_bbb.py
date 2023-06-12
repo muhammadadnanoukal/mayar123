@@ -47,7 +47,7 @@ class IntegrationBBB(models.Model):
 
     # function create meeting
     def create_bigbluebutton_room(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/create"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/create"
 
         meeting_id = str(uuid.uuid4())  # Generate a unique meeting ID
 
@@ -67,7 +67,7 @@ class IntegrationBBB(models.Model):
             'endWhenNoModeratorDelayInMinutes': self.min_to_end,
         }
         print('params create==>',params)
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'  # Replace with your actual shared secret
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'  # Replace with your actual shared secret
         call = 'create'
 
         query_string = urllib.parse.urlencode(params)
@@ -93,7 +93,7 @@ class IntegrationBBB(models.Model):
 
     # function join meeting
     def join_bigbluebutton_room(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/join"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join"
         # meeting_id = str(uuid.uuid4())
         # meeting_id = self.create_bigbluebutton_room()
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
@@ -104,7 +104,7 @@ class IntegrationBBB(models.Model):
             'role': self.role,  # Use the stored role
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'join'
 
@@ -148,14 +148,14 @@ class IntegrationBBB(models.Model):
 
     # function end meeting
     def end_bigbluebutton_meeting(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/end"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/end"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         print('ma b3d al b5ed5 ==>', meeting_id)
         params = {
             'meetingID': meeting_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'end'
 
@@ -181,14 +181,14 @@ class IntegrationBBB(models.Model):
 
     # function after end and get info about meeting
     def getMeetingInfo(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/getMeetingInfo"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/getMeetingInfo"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         print('b6e5 info ==>', meeting_id)
         params = {
             'meetingID': meeting_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'getMeetingInfo'
 
@@ -223,13 +223,13 @@ class IntegrationBBB(models.Model):
 
     # function after end and get info about meeting
     def getMeetings(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/getMeetings"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/getMeetings"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         print('getMeetings info ==>', meeting_id)
         params = {
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'getMeetings'
 
@@ -259,7 +259,7 @@ class IntegrationBBB(models.Model):
 
     # function for inserting a document into a meeting
     def insert_document(self, meeting_id, xml_string):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/insertDocument"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/insertDocument"
 
         params = {
             'meetingID': meeting_id,
@@ -269,7 +269,7 @@ class IntegrationBBB(models.Model):
         headers = {
             'Content-Type': 'application/xml'
         }
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'insertDocument'
 
@@ -315,14 +315,14 @@ class IntegrationBBB(models.Model):
 
     # function for check isMeetingRunning
     def isMeetingRunning(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/isMeetingRunning"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/isMeetingRunning"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         print('isMeetingRunning info ==>', meeting_id)
         params = {
             'meetingID': meeting_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'isMeetingRunning'
 
@@ -352,14 +352,14 @@ class IntegrationBBB(models.Model):
 
     # function for check getRecordings
     def getRecordings(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/getRecordings"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/getRecordings"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         print('getRecordings info ==>', meeting_id)
         params = {
             'meetingID': meeting_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'getRecordings'
 
@@ -393,7 +393,7 @@ class IntegrationBBB(models.Model):
 
     # function for check publishRecordings
     def publishRecordings(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/publishRecordings"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/publishRecordings"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         record_id = self.record_id  # Retrieve the stored meeting ID
         print('publishRecordings info ==>', meeting_id)
@@ -402,7 +402,7 @@ class IntegrationBBB(models.Model):
             'publish': 'true',
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'publishRecordings'
 
@@ -432,7 +432,7 @@ class IntegrationBBB(models.Model):
 
     # function for check deleteRecordings
     def deleteRecordings(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/deleteRecordings"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/deleteRecordings"
         meeting_id = self.meeting_id  # Retrieve the stored meeting ID
         record_id = self.record_id  # Retrieve the stored record ID
         print('deleteRecordings info ==>', record_id)
@@ -440,7 +440,7 @@ class IntegrationBBB(models.Model):
             'recordID': record_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'deleteRecordings'
 
@@ -474,14 +474,14 @@ class IntegrationBBB(models.Model):
 
     # function for check getRecordingTextTracks
     def getRecordingTextTracks(self):
-        base_url = "https://bbb.al-tanmyah.com/bigbluebutton/api/getRecordingTextTracks"
+        base_url = "http://test-install.blindsidenetworks.com/bigbluebutton/api/getRecordingTextTracks"
         record_id = self.record_id  # Retrieve the stored record ID
         print('getRecordingTextTracks info ==>', record_id)
         params = {
             'recordID': record_id,
         }
 
-        shared_secret = 'n2IltrMMWTwsQ4f5WP8QGIGrRplSMfjhKUmhWBvdUk'
+        shared_secret = '8cd8ef52e8e101574e400365b55e11a6'
 
         call = 'getRecordingTextTracks'
 
